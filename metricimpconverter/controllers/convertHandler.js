@@ -1,44 +1,78 @@
-function ConvertHandler() {
-  
-  this.getNum = function(input) {
-    let result;
-    
-    return result;
-  };
-  
-  this.getUnit = function(input) {
-    let result;
-    
-    return result;
-  };
-  
-  this.getReturnUnit = function(initUnit) {
-    let result;
-    
-    return result;
-  };
-
-  this.spellOutUnit = function(unit) {
-    let result;
-    
-    return result;
-  };
-  
-  this.convert = function(initNum, initUnit) {
-    const galToL = 3.78541;
-    const lbsToKg = 0.453592;
-    const miToKm = 1.60934;
-    let result;
-    
-    return result;
-  };
-  
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    
-    return result;
-  };
-  
+const CONVERT_MAP = {
+  gal: {
+    convertsTo: 'l',
+    spell: 'gallons',
+    convert: (num) => num * 3.78541,
+  },
+  l: {
+    convertsTo: 'gal',
+    spell: 'liters',
+    convert: (num) => num / 3.78541,
+  },
+  lbs: {
+    convertsTo: 'kg',
+    spell: 'pounds',
+    convert: (num) => num * 0.453592,
+  },
+  kg: {
+    convertsTo: 'lbs',
+    spell: 'kilograms',
+    convert: (num) => num / 0.453592,
+  },
+  mi: {
+    convertsTo: 'km',
+    spell: 'miles',
+    convert: (num) => num * 1.60934,
+  },
+  km: {
+    convertsTo: 'mi',
+    spell: 'kilometers',
+    convert: (num) => num / 1.60934,
+  },
 }
+
+const ConvertHandler = (input) => {
+  let initNum = parseFloat(input) || 1;
+
+  if (input.includes('/')) {
+    const fractionalArray = input.split('/');
+
+    if (fractionalArray.length > 2) {
+      return 'invalid number';
+    }
+
+    const [numerator, denominator] = fractionalArray;
+    initNum = parseFloat(numerator) / parseFloat(denominator);
+  }
+
+  const initUnit = input.replace(/[0-9./]/g, '');
+
+  if (!initNum) {
+    return 'invalid number';
+  }
+
+  if (!initUnit) {
+    return 'invalid unit';
+  }
+
+  const baseUnit = CONVERT_MAP[initUnit.toLowerCase()];
+
+  if (!baseUnit) {
+    return 'invalid unit';
+  }
+
+  const returnUnit = CONVERT_MAP[baseUnit.convertsTo];
+  const returnNum = CONVERT_MAP[initUnit.toLowerCase()].convert(initNum).toFixed(5);
+  
+  const string = `${initNum} ${baseUnit.spell} converts to ${returnNum} ${returnUnit.spell}`;
+    
+  return {
+    initNum,
+    initUnit: initUnit.toLowerCase(),
+    returnNum,
+    returnUnit: baseUnit.convertsTo,
+    string
+  };
+};
 
 module.exports = ConvertHandler;
