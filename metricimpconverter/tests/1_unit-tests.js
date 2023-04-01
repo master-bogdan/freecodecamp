@@ -83,6 +83,7 @@ describe('Unit Tests', function() {
     const input = '1gal';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 3.78541);
+    assert.isNumber(result.returnNum);
     done();
   });
 
@@ -90,6 +91,7 @@ describe('Unit Tests', function() {
     const input = '1L';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 0.26417);
+    assert.isNumber(result.returnNum);
     done();
   });
 
@@ -97,6 +99,7 @@ describe('Unit Tests', function() {
     const input = '1mi';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 1.60934);
+    assert.isNumber(result.returnNum);
     done();
   });
 
@@ -104,6 +107,7 @@ describe('Unit Tests', function() {
     const input = '1km';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 0.62137);
+    assert.isNumber(result.returnNum);
     done();
   });
 
@@ -111,6 +115,7 @@ describe('Unit Tests', function() {
     const input = '1lbs';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 0.45359);
+    assert.isNumber(result.returnNum);
     done();
   });
 
@@ -118,6 +123,7 @@ describe('Unit Tests', function() {
     const input = '1kg';
     const result = ConvertHandler(input);
     assert.equal(result.returnNum, 2.20462);
+    assert.isNumber(result.returnNum);
     done();
   });
 });
