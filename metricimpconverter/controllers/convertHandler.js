@@ -71,7 +71,7 @@ const ConvertHandler = (input) => {
     initNum,
     initUnit: initUnit.toLowerCase() === 'l' ? 'L' : initUnit.toLowerCase(), // L is a special case
     returnNum,
-    returnUnit: baseUnit.convertsTo,
+    returnUnit: baseUnit.convertsTo === 'l' ? 'L' : baseUnit.convertsTo,
     string
   };
 };
