@@ -5,39 +5,39 @@ const assert = require('chai').assert;
 const ConvertHandler = require('../controllers/convertHandler.js');
 
 describe('Unit Tests', function() {
-  it('Whole number input', (done) => {
-    const input = '32L';
+  it('should correctly read a whole number input', (done) => {
+    const input = '1L';
     const result = ConvertHandler(input);
-    assert.equal(result.initNum, 32);
-    assert.equal(result.initUnit, 'l');
+    assert.equal(result.initNum, 1);
+    assert.equal(result.initUnit, 'L');
     done();
   });
 
-  it('Decimal Input', (done) => {
+  it('should correctly read a decimal number input', (done) => {
     const input = '3.2L';
     const result = ConvertHandler(input);
     assert.equal(result.initNum, 3.2);
-    assert.equal(result.initUnit, 'l');
+    assert.equal(result.initUnit, 'L');
     done();
   });
 
-  it('Fractional Input', (done) => {
+  it('should correctly read a fractional input', (done) => {
     const input = '1/2L';
     const result = ConvertHandler(input);
     assert.equal(result.initNum, 0.5);
-    assert.equal(result.initUnit, 'l');
+    assert.equal(result.initUnit, 'L');
     done();
   });
 
-  it('Fractional Input w/ Decimal', (done) => {
+  it('should correctly read a fractional input with a decimal', (done) => {
     const input = '1.5/2L';
     const result = ConvertHandler(input);
     assert.equal(result.initNum, 0.75);
-    assert.equal(result.initUnit, 'l');
+    assert.equal(result.initUnit, 'L');
     done();
   });
 
-  it('Invalid Input (double fraction)', (done) => {
+  it('should correctly return an error on a double-fraction (i.e. 3/2/3)', (done) => {
     const input = '1/2/3L';
     const result = ConvertHandler(input);
     assert.equal(result, 'invalid number');
@@ -51,24 +51,24 @@ describe('Unit Tests', function() {
     done();
   });
 
-  it('Valid Unit Input', (done) => {
+  it('should correctly read each valid input unit', (done) => {
     const input = '1L';
     const result = ConvertHandler(input);
-    assert.equal(result.initUnit, 'l');
+    assert.equal(result.initUnit, 'L');
     done();
   });
 
-  it('Invalid Unit Input', (done) => {
+  it('should correctly return an error for an invalid input unit', (done) => {
     const input = '1LX';
     const result = ConvertHandler(input);
     assert.equal(result, 'invalid unit');
     done();
   });
 
-  it('No Unit Input', (done) => {
-    const input = '1';
+  it('should return the correct return unit for each valid input unit.', (done) => {
+    const input = '1L';
     const result = ConvertHandler(input);
-    assert.equal(result, 'invalid unit');
+    assert.equal(result.returnUnit, 'gal');
     done();
   });
 
