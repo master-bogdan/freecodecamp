@@ -33,23 +33,16 @@ const CONVERT_MAP = {
 
 const ConvertHandler = (input) => {
   let initNum = parseFloat(input) || 1;
+  let fractionalArray = input.includes('/') ? input.split('/') : null;
 
-  if (input.includes('/')) {
-    const fractionalArray = input.split('/');
-
-    if (fractionalArray.length > 2) {
-      return 'invalid number';
-    }
-
+  if (fractionalArray && fractionalArray.length > 2) {
+    initNum = null;
+  } else if (fractionalArray && fractionalArray.length === 2) {
     const [numerator, denominator] = fractionalArray;
     initNum = parseFloat(numerator) / parseFloat(denominator);
   }
 
-  const initUnit = input.replace(/[0-9./]/g, '');
-
-  if (!initNum) {
-    return 'invalid number';
-  }
+  const initUnit = input.replace(/[0-9./]/g, '').trim();
 
   if (!initUnit) {
     return 'invalid unit';
@@ -57,6 +50,14 @@ const ConvertHandler = (input) => {
 
   const baseUnit = CONVERT_MAP[initUnit.toLowerCase()];
 
+  if (!baseUnit && !initNum) {
+    return 'invalid number and unit';
+  }
+
+  if (!initNum) {
+    return 'invalid number';
+  }
+  
   if (!baseUnit) {
     return 'invalid unit';
   }
